@@ -365,9 +365,25 @@ public class RoleVO {
 		</set>
 	</property>
 </bean>
-
 ```
-
+``` java
+public class DateConvert implements Converter<String, Date>{
+	//Converter<S, T>
+	//S:source,需要转换的源的类型
+	//T:target,需要转换的目标类型
+	@Override
+	public Date convert(String str) {
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+		Date date = null;
+		try {
+			date = df.parse(str);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return date;
+	}
+}
+```
 
   [1]: https://www.github.com/StepForwards/my-notes/raw/images/SpringMVC/images/1502776986634.jpg
   [2]: https://www.github.com/StepForwards/my-notes/raw/images/SpringMVC/images/1502794541934.jpg
