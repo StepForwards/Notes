@@ -3,8 +3,7 @@ title: SpringMVC
 tags: spring,springMVC
 grammar_cjkRuby: true
 ---
-[toc]
-
+-
 	* [SpringMVC](#springmvc)
 		* [SpringMVC处理流程](#springmvc处理流程)
 		* [Hello World](#hello-world)
@@ -25,6 +24,7 @@ grammar_cjkRuby: true
 		* [解决乱码](#解决乱码)
 		* [自定义格式类型转换](#自定义格式类型转换)
 			* [日期格式化](#日期格式化)
+-
 ## SpringMVC
 
 > 全名是Spring web mvc 是web层的框架，它是Spring框架的一部分
