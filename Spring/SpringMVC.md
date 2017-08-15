@@ -231,7 +231,7 @@ public class RoleController {
 #### 默认支持参数类型
 
 > 如果我们定义了请求，响应，**session**，**springmvc**就会将**HttpServletRequest**，**HttpServletResponse**，**HttpSession**三个对象作为参数传递过来，我们在定义参数的时候还可以写**Model/ModelMap**用来向页面传值。
-
+==controller==
 ``` java
 @RequestMapping("/role/roleList.action")
 	public ModelAndView roleList
@@ -266,7 +266,7 @@ public class RoleController {
 > 须保证表单的name属性和model中的属性彼此对应，需要设置set方法。
 
 ![表单中name设置][7]
-
+==controller==
 ``` java
 	@RequestMapping("/role/editRole.action")
 	public ModelAndView editRole(Role r){
@@ -279,6 +279,7 @@ public class RoleController {
 
 > 如果是包装类中的属性，需要将表单信息中的name属性名设置为类中属性的属性
 
+==RoleVO==
 ``` java
 public class RoleVO {
 	
@@ -319,6 +320,7 @@ public class RoleVO {
                 <td><input type="hidden" name="list[${status.index }].rId" value="${role.rId}"></td>
 ```
 ![在包装类中添加list集合属性][11]
+==controller:==
 ```java
 	/*
 	 * 这种情况仅仅适合包装类，不能将集合直接赋值给参数
@@ -354,6 +356,7 @@ public class RoleVO {
 
  - 在springmvc的配置文件中，配置一个转换器工厂的bean
 
+==Springmvc.xml:==
 ``` xml
 <!-- 使用注解的方式加载处理器映射器和处理器适配器，添加自定义转换服务 -->
 <mvc:annotation-driven conversion-service="converionService"/>
@@ -366,6 +369,7 @@ public class RoleVO {
 	</property>
 </bean>
 ```
+==util：==
 ``` java
 public class DateConvert implements Converter<String, Date>{
 	//Converter<S, T>
@@ -389,15 +393,16 @@ public class DateConvert implements Converter<String, Date>{
 > 对于日期格式，我们可以直接通过注解的形式对POJO的成员变量进行日期的格式化
 
 ![包装类中使用注解进行日期格式化][12]
-
+==jsp中：==
 ``` html
 <td>修改时间</td>
 <td colspan="3" class="control">
 <input name="r.rUpdatetime" type="datetime-local" value="<fmt:formatDate value="${role.rUpdatetime }" type="both" pattern="yyyy-MM-dd'T'HH:mm" />" >
 </td>
 ```
+==controller：==
 ```java
-@RequestMapping("/role/editRole.action")
+	@RequestMapping("/role/editRole.action")
 	public ModelAndView editRole(RoleVO rv){
 		System.out.println(rv);
 		rs.updateRoleById(rv);
