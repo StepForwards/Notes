@@ -153,6 +153,114 @@ dlerMapping" />
 <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHan
 dlerAdapter" />
 ```
+![处理器][2]
+![过时的处理器映射器][3]![过时的处理器适配器][4]
+
+### 注解驱动
+直接配置处理器映射器和处理器适配器比较麻烦，可以使用注解驱动来加载。
+SpringMVC使用`<mvc:annotation-driven/>`自动加载RequestMappingHandlerMapping和RequestMappingHandlerAdapter可以在springmvc.xml配置文件中使用`<mvc:annotation-driven/>`代替注解处理器和适配器的配置。
+
+![注解的方式配置处理器映射器及适配器][5]
+
+### 视图解析器
+
+> 通过配置视图解析器的前缀和后缀在前端控制器将ModelAndView交过视图解析器的时候，自动给视图添加前缀和后缀
+
+``` xml
+<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	<property name="prefix" value="/WEB-INF/view/"></property>
+	<property name="suffix" value=".jsp"></property>
+</bean>
+```
+
+``` java
+package com.forward.ssm.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.forward.ssm.model.Role;
+import com.forward.ssm.service.RoleService;
+
+@Controller
+public class RoleController {
+	
+	@Autowired
+	RoleService rs;
+	
+	@RequestMapping("/role/roleList.action")
+	public ModelAndView roleList(){
+		ModelAndView mv = new ModelAndView();
+		List<Role> list = rs.findAllRole();
+		mv.addObject("list", list);
+		mv.setViewName("/role/roleList");
+		return mv;
+	}
+	
+}
+
+```
+### 静态资源放行
+
+> 前端控制器的本质是一个servlet，所以==url-pattern==符合servlet的规则，但是springmvc是需要拦截请求才能使用框架进行处理的，所以关于路径匹配上一般不会使用完全路径匹配和目录匹配，通常设置为后缀名进行匹配（推荐使用这种方式），也可以使用==/==和==/*==，但是这样做会拦截静态资源，需要我们在Controller中进行静态资源的操作。
+> **注意：如果前端控制器配置为扩展名匹配的话，是不需要设置静态资源放行的，所以建议使用扩展名匹配**
+
+#### 方式一
+
+> tomcat内部有一个叫做默认servlet的==url-pattern==为==/==其可以处理静态资源，我们可以在配置文件中配置一个默认的servlet为这个，当所有路径都不匹配时让这个servlet进行处理，必须要配置注解驱动才能正常使用
+
+``` xml
+<mvc:default-servlet-handler/>
+```
+#### 方式二
+
+> 手动建立映射关系，==/**== 表示可以有下一级文件夹，这种映射路径的方法，内部是由处理器映射器去执行具体的映射过程，因此必须要配置注解驱动如果不配置注解驱动会导致web应用无法访问，此方法的好处是路径可以直接在配置文件中进行指定
+
+``` xml
+<mvc:resources location="/image/" mapping="/image/**"></mvc:resources>
+<mvc:resources location="/css/" mapping="/css/**"></mvc:resources>
+<mvc:resources location="/js/" mapping="/js/**"></mvc:resources>
+<mvc:resources location="/lib/" mapping="/lib/**"></mvc:resources>
+```
+### 参数绑定
+
+#### 默认支持参数类型
+
+> 如果我们定义了请求，响应，**session**，**springmvc**就会将**HttpServletRequest**，**HttpServletResponse**，**HttpSession**三个对象作为参数传递过来，我们在定义参数的时候还可以写**Model/ModelMap**用来向页面传值。
+
+``` java
+@RequestMapping("/role/roleList.action")
+	public ModelAndView roleList
+	(HttpServletRequest req,HttpServletResponse res,HttpSession session,Model md,ModelMap mm){
+		System.out.println(req+","+res+","+session+","+md+","+mm);
+		return null;
+	}
+```
+#### 简单类型参数
+
+> 参数类型推荐是使用包装数据类型，因为基础数据类型不可以为null
+
+ - **整型：Integer、int**
+ - **字符串：String**
+ - **单精度：Float、float**
+ - **双精度：Double、double**
+ - **布尔型：Boolean、boolean**
+
+> 说明：对于布尔类型的参数，请求的参数值为true或false或1或0
+
+#### @RequestParam
+
+> 如果表单中的name属性和参数名称不一致可以使用==@RequestParam==建立映射关系，一旦使用了这个注解，传递的参数就必须含有该名称如果没有就会报错误
+> ![注解中的参数错误][6]
 
 
   [1]: https://www.github.com/StepForwards/my-notes/raw/images/SpringMVC/images/1502776986634.jpg
+  [2]: https://www.github.com/StepForwards/my-notes/raw/images/SpringMVC/images/1502794541934.jpg
+  [3]: https://www.github.com/StepForwards/my-notes/raw/images/SpringMVC/images/1502794692913.jpg
+  [4]: https://www.github.com/StepForwards/my-notes/raw/images/SpringMVC/images/1502794736500.jpg
+  [5]: https://www.github.com/StepForwards/my-notes/raw/images/SpringMVC/images/1502795310021.jpg
+  [6]: https://www.github.com/StepForwards/my-notes/raw/images/SpringMVC/images/1502798033282.jpg
