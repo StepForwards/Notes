@@ -28,6 +28,7 @@ jsp页面-->前端控制器(DispatcherServlet): 返回HTML页面
  - 新建config的source folder
  - 创建配置文件springmvc.xml,配置扫描controller包
 
+==springmvc.xml==
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -49,6 +50,7 @@ jsp页面-->前端控制器(DispatcherServlet): 返回HTML页面
 ```
 - 配置web.xml文件，配置前端控制器servlet的初始化参数为springmvc配置文件的路径，init-param的属性名和Spring容器的context-param属性名相同均为contextConfigLocation,只不过这个初始化参数指的是servlet的初始化参数（如果不配置路径，Springmvc会默认去找/WEB-INF/servlet名字-serlet.xml文件，如果没有就会报异常）
 
+==springmvc.xml==
 ``` xml
 <!-- 配置Spring核心文件 -->
 	<servlet>
@@ -71,6 +73,7 @@ jsp页面-->前端控制器(DispatcherServlet): 返回HTML页面
  - 在其中创建类,用来处理请求,使用注解的形式将其配置
 到spring容器中,在其中创建方法处理请求
 
+==controller==
 ``` java
 package com.forward.springmvc.controller;
 
@@ -144,7 +147,8 @@ public class RoleController {
 
  - 配置相关组件
 	 - 在springmvc的配置文件中需要将新的处理器映射器和处理器适配器配置到容器中
-	 
+
+==springmvc.xml==
 ``` xml
 <!-- 配置处理器映射器 -->
 <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHan
@@ -166,13 +170,14 @@ SpringMVC使用`<mvc:annotation-driven/>`自动加载RequestMappingHandlerMappin
 
 > 通过配置视图解析器的前缀和后缀在前端控制器将ModelAndView交过视图解析器的时候，自动给视图添加前缀和后缀
 
+==springmvc.xml==
 ``` xml
 <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 	<property name="prefix" value="/WEB-INF/view/"></property>
 	<property name="suffix" value=".jsp"></property>
 </bean>
 ```
-
+==controller==
 ``` java
 package com.forward.ssm.controller;
 
@@ -213,6 +218,7 @@ public class RoleController {
 
 > tomcat内部有一个叫做默认servlet的==url-pattern==为==/==其可以处理静态资源，我们可以在配置文件中配置一个默认的servlet为这个，当所有路径都不匹配时让这个servlet进行处理，必须要配置注解驱动才能正常使用
 
+==springmvc.xml==
 ``` xml
 <mvc:default-servlet-handler/>
 ```
@@ -220,6 +226,7 @@ public class RoleController {
 
 > 手动建立映射关系，==/**== 表示可以有下一级文件夹，这种映射路径的方法，内部是由处理器映射器去执行具体的映射过程，因此必须要配置注解驱动如果不配置注解驱动会导致web应用无法访问，此方法的好处是路径可以直接在配置文件中进行指定
 
+==springmvc.xml==
 ``` xml
 <mvc:resources location="/image/" mapping="/image/**"></mvc:resources>
 <mvc:resources location="/css/" mapping="/css/**"></mvc:resources>
