@@ -421,6 +421,7 @@ public class DateConvert implements Converter<String, Date>{
 > 对于日期格式，我们可以直接通过注解的形式对POJO的成员变量进行日期的格式化
 
 ![包装类中使用注解进行日期格式化][12]
+
 ==jsp中：==
 ``` html
 <td>修改时间</td>
