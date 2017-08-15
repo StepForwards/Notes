@@ -426,7 +426,7 @@ public class DateConvert implements Converter<String, Date>{
 ``` html
 <td>修改时间</td>
 <td colspan="3" class="control">
-<input name="r.rUpdatetime" type="datetime-local" value="<fmt:formatDate value="${role.rUpdatetime }" type="both" pattern="yyyy-MM-dd'T'HH:mm" />" >
+<input name="rUpdatetime" type="datetime-local" value="<fmt:formatDate value="${role.rUpdatetime }" type="both" pattern="yyyy-MM-dd'T'HH:mm" />" >
 </td>
 ```
 ==controller：==
