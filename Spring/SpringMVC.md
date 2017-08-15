@@ -255,7 +255,118 @@ public class RoleController {
 #### @RequestParam
 
 > 如果表单中的name属性和参数名称不一致可以使用==@RequestParam==建立映射关系，一旦使用了这个注解，传递的参数就必须含有该名称如果没有就会报错误
-> ![注解中的参数错误][6]
+
+![注解中的参数错误][6]
+
+ - required属性表示页面传过来的值是否是必须的默认是true
+ - defaultValue表示当其为空时的默认值
+
+#### 参数绑定model类
+
+> 须保证表单的name属性和model中的属性彼此对应，需要设置set方法。
+
+![表单中name设置][7]
+
+``` java
+	@RequestMapping("/role/editRole.action")
+	public ModelAndView editRole(Role r){
+		System.out.println(r);
+		rs.updateRoleById(r);
+		return null;
+	}
+```
+#### 参数邦定包装类
+
+> 如果是包装类中的属性，需要将表单信息中的name属性名设置为类中属性的属性
+
+``` java
+public class RoleVO {
+	
+	private Role r;
+	
+	public Role getR() {
+		return r;
+	}
+	public void setR(Role r) {
+		this.r = r;
+	}
+```
+```java
+	@RequestMapping("/role/editRole.action")
+	public ModelAndView editRole(RoleVO rv){
+		rs.updateRoleById(rv);
+		return null;
+	}
+```
+![jsp页面包装类,name属性设置][8]
+
+#### 数组参数的绑定
+
+> 在表单中如果有checkbox这种多选框，提交到controller可以通过数组的形式获取，可以将checkbox的name属性设置为方法的参数名称，也可以在包装类中定义成员变量的名字为表单中的name属性值
+
+![在包装类中定义][9]
+
+![jsp,controller设置][10]
+
+
+#### 集合类型参数绑定
+
+> 在表单中如果牵扯到表格中的数据批量修改，并且每一行有多个数据都要更改且有多行，我们可以把每一行当作一个对象，把多行数据放入对象集合中进行提交，**集合类型参数不能直接使用，必须将其作为包装类的属性使用**
+
+``` html
+ 				<td><input type="text" name="list[${status.index }].rName" value="${ role.rName }"></td>
+                <td><input type="text" name="list[${status.index }].rDesc" value="${ role.rDesc }"></td>
+                <td><input type="hidden" name="list[${status.index }].rId" value="${role.rId}"></td>
+```
+![在包装类中添加list集合属性][11]
+```java
+	/*
+	 * 这种情况仅仅适合包装类，不能将集合直接赋值给参数
+	 */
+	@RequestMapping("/role/batchRole.action")
+	public ModelAndView batchRole(RoleVO rv){
+		rs.updateBatchRole(rv);
+		return null;
+	}
+```
+
+### 解决乱码
+
+> 在==web.xml==中配置编码过滤器
+
+``` xml
+  <filter>
+  	<filter-name>CharacterEncodingFilter</filter-name>
+  	<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+  	<init-param>
+  		<param-name>encoding</param-name>
+  		<param-value>UTF-8</param-value>
+  	</init-param>
+  </filter>
+  <filter-mapping>
+  	<filter-name>CharacterEncodingFilter</filter-name>
+  	<url-pattern>*.action</url-pattern>
+  </filter-mapping>
+```
+### 自定义格式类型转换
+
+> 可以进行日期的转换，以及数据的相应格式化（比如将表单提交的数据加前后缀）springmvc给我们提供一个转换器工厂，我们可以通过这个转换器工厂生产很多转换类（需要实现Convert接口）按照我们的要求进行数据的格式转换，对方法参数赋值的事情是处理器适配器做的，所以配置工作应该交过处理器适配器，而在springmvc中我们已经通过注解配置了这个组件，因此配置应该在==<mvc:annotation-driven/>==进行设置。
+
+ - 在springmvc的配置文件中，配置一个转换器工厂的bean
+
+``` xml
+<!-- 使用注解的方式加载处理器映射器和处理器适配器，添加自定义转换服务 -->
+<mvc:annotation-driven conversion-service="converionService"/>
+<!-- 配置转换器工厂，并将转换器交给工厂处理 -->
+<bean name="converionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+	<property name="converters">
+		<set>
+			<bean class="com.forward.ssm.util.DateConvert"></bean>
+		</set>
+	</property>
+</bean>
+
+```
 
 
   [1]: https://www.github.com/StepForwards/my-notes/raw/images/SpringMVC/images/1502776986634.jpg
@@ -264,3 +375,8 @@ public class RoleController {
   [4]: https://www.github.com/StepForwards/my-notes/raw/images/SpringMVC/images/1502794736500.jpg
   [5]: https://www.github.com/StepForwards/my-notes/raw/images/SpringMVC/images/1502795310021.jpg
   [6]: https://www.github.com/StepForwards/my-notes/raw/images/SpringMVC/images/1502798033282.jpg
+  [7]: https://www.github.com/StepForwards/my-notes/raw/images/SpringMVC/images/1502798478213.jpg
+  [8]: https://www.github.com/StepForwards/my-notes/raw/images/SpringMVC/images/1502798990383.jpg
+  [9]: https://www.github.com/StepForwards/my-notes/raw/images/SpringMVC/images/1502799446674.jpg
+  [10]: https://www.github.com/StepForwards/my-notes/raw/images/SpringMVC/images/1502799566091.jpg
+  [11]: https://www.github.com/StepForwards/my-notes/raw/images/SpringMVC/images/1502800421267.jpg
