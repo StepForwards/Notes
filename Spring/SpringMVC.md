@@ -384,6 +384,26 @@ public class DateConvert implements Converter<String, Date>{
 	}
 }
 ```
+#### 日期格式化
+
+> 对于日期格式，我们可以直接通过注解的形式对POJO的成员变量进行日期的格式化
+
+![包装类中使用注解进行日期格式化][12]
+
+``` html
+<td>修改时间</td>
+<td colspan="3" class="control">
+<input name="r.rUpdatetime" type="datetime-local" value="<fmt:formatDate value="${role.rUpdatetime }" type="both" pattern="yyyy-MM-dd'T'HH:mm" />" >
+</td>
+```
+```java
+@RequestMapping("/role/editRole.action")
+	public ModelAndView editRole(RoleVO rv){
+		System.out.println(rv);
+		rs.updateRoleById(rv);
+		return null;
+	}
+```
 
   [1]: https://www.github.com/StepForwards/my-notes/raw/images/SpringMVC/images/1502776986634.jpg
   [2]: https://www.github.com/StepForwards/my-notes/raw/images/SpringMVC/images/1502794541934.jpg
@@ -396,3 +416,4 @@ public class DateConvert implements Converter<String, Date>{
   [9]: https://www.github.com/StepForwards/my-notes/raw/images/SpringMVC/images/1502799446674.jpg
   [10]: https://www.github.com/StepForwards/my-notes/raw/images/SpringMVC/images/1502799566091.jpg
   [11]: https://www.github.com/StepForwards/my-notes/raw/images/SpringMVC/images/1502800421267.jpg
+  [12]: https://www.github.com/StepForwards/my-notes/raw/images/SpringMVC/images/1502802577923.jpg
