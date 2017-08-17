@@ -1,12 +1,12 @@
 ---
-title: Maven 
+title: Maven应用配置
 tags: Maven
 grammar_cjkRuby: true
 ---
 
 [toc]
 
-## Maven应用配置
+## Maven
 
 > maven是apache下的一个开源项目，其功能是为了管理java工程，在项目中主要被我们用来管理jar包
 
