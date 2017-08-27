@@ -1,5 +1,5 @@
 ---
 title: Ajax笔记 
-tags: 标签
+tags: ajax
 grammar_cjkRuby: true
 ---
