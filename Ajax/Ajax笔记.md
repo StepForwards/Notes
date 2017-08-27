@@ -104,6 +104,7 @@ post或者get发送的数据只能是以下两种类型不能是json字符串：
 该方式支持get提交以及post提交并且可以提交json字符串
 提交数据为json字符串的时必须在Controller层相应方法中的参数添加@RequestBody注解
 
+jsp中js
 ``` javascript
 $.ajax({
     				data:'{"name":'+this.value+'}',
@@ -120,6 +121,7 @@ $.ajax({
     				url:"${pageContext.request.contextPath}/user/loginCheckname.action"
     			});
 ```
+Controller层java文件
 ``` java
 @RequestMapping("/loginCheckname.action")
 	@ResponseBody
