@@ -120,6 +120,16 @@ $.ajax({
     				url:"${pageContext.request.contextPath}/user/loginCheckname.action"
     			});
 ```
+``` java
+@RequestMapping("/loginCheckname.action")
+	@ResponseBody
+	public Message login(@RequestBody User u){
+		Message message = new Message();
+		message.setSuccess(us.checkName(u) == null ? false : true);
+		return message;
+	}
+```
+
 
 
 
