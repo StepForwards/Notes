@@ -86,8 +86,9 @@ post或者get发送的数据只能是以下两种类型不能是json字符串：
 
  - 序列化格式：k=v&k=v&k=v
  - json对象：{"k":v,"k":v}
-	 - 发送数据类型是json对象时需要在Controller方法的参数中添加@RequestBody注解，解析json对象为model类
-	 - 返回内容格式为json格式时需要在Controller方法中response参数或者返回值model类中添加@ResponseBody注解，解析model类为json对象
+
+在Controller层接收数据的时候只需要使用model类进行接收
+返回内容格式为json格式时需要在Controller方法中返回值model类中添加@ResponseBody注解，解析model类为json对象
 
 ``` java
 @RequestMapping("/loginCheckname.action")
@@ -98,5 +99,27 @@ post或者get发送的数据只能是以下两种类型不能是json字符串：
 		return message;
 	}
 ```
+### $.ajax
+
+该方式支持get提交以及post提交并且可以提交json字符串
+提交数据为json字符串的时必须在Controller层相应方法中的参数添加@RequestBody注解
+
+``` javascript
+$.ajax({
+    				data:'{"name":'+this.value+'}',
+    				dataType:"json",
+    				contentType:"application/json;chartset=utf-8",
+    				success:function(message){
+    					if(message.success === false){
+    						$("span").text("用户不存在");
+    					}else{
+    						$("span").text("");
+    					}
+    				},
+    				type:"post",
+    				url:"${pageContext.request.contextPath}/user/loginCheckname.action"
+    			});
+```
+
 
 
