@@ -3,6 +3,13 @@ title: RequestBody&ResponseBody
 tags: 注解,@RequestBody,@ResponseBody
 grammar_cjkRuby: true
 ---
+- 目录
+	* [@RequestBody](#requestbody)
+	* [@ResponseBody](#responsebody)
+
+
+![两种交互模式][1]
+
 ## @RequestBody
 **作用：**
 
@@ -31,3 +38,6 @@ grammar_cjkRuby: true
 **使用时机**
 
 返回的数据不是html标签的页面，而是其它某种格式的数据时（如json、xml等）使用；
+
+
+  [1]: https://www.github.com/StepForwards/my-notes/raw/images/RequestBody&ResponseBody/images/1504059861335.jpg
