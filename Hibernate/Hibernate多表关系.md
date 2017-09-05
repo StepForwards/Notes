@@ -47,11 +47,11 @@ public class Video {
     
 <hibernate-mapping package="com.zhiyou100.hibernate.model">
 	<class name="Speaker" table="t_speaker" >
+		<!-- 设置主键及主键生成策略 -->
 		<id name="id" >
 			<generator class="native"></generator>
 		</id>
 		<property name="name"></property>
-		
 		<set name="videoSet" >
 			<!-- 设置外键并指定set集合泛型 -->
 			<key column="speakerId"></key>
