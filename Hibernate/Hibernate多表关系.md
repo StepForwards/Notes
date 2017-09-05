@@ -54,16 +54,29 @@ public class Video {
 		<property name="name"></property>
 		
 		<set name="videoSet" >
+			<!-- 设置外键并指定set集合泛型 -->
 			<key column="speakerId"></key>
 			<one-to-many class="Video"/>
 		</set>
-		<!-- 
+		<!-- list集合配置
 			<list name="videoSet">
 				<key column="speakerId"></key>
 				<index column="colIndex" type="java.lang.Integer"></index>
 				<one-to-many class="Video"/>
 			</list>
 		-->
+	</class>
+</hibernate-mapping>
+```
+``` xml
+<hibernate-mapping package="com.zhiyou100.hibernate.model">
+	<class name="Video" table="t_video" >
+		<id name="id">
+			<generator class="native"></generator>
+		</id>
+		<property name="title"></property>
+		<!-- 配置类类型的name，全类名，以及Video表的外键（用video表的外键联系两个表） -->
+		<many-to-one name="speaker" class="Speaker" column="speakerId"  ></many-to-one>
 	</class>
 </hibernate-mapping>
 ```
