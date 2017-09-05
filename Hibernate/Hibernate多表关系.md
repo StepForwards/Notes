@@ -50,7 +50,6 @@ public class Video {
 		<id name="id" >
 			<generator class="native"></generator>
 		</id>
-		
 		<property name="name"></property>
 		
 		<set name="videoSet" >
