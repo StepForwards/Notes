@@ -79,3 +79,47 @@ public class Video {
 	</class>
 </hibernate-mapping>
 ```
+**创建测试文件**
+
+> 需要双方建立维护关系，并且只有持久化状态才能写入数据库
+
+``` java
+public class One2ManyTest {
+	
+	private Session session;
+	private Transaction transaction;
+	
+	@Before
+	public void befor(){
+		session = MyHibernateUtil.openSession();
+		transaction = session.beginTransaction();
+	}
+	
+	@After
+	public void after(){
+		transaction.commit();
+		session.close();
+		MyHibernateUtil.closeFactory();
+	}
+	
+	
+	@Test
+	public void test01(){
+		Speaker speaker = new Speaker();
+		speaker.setName("八王");
+		
+		Video video1 = new Video();
+		Video video2 = new Video();
+		video1.setTitle("video1");
+		video2.setTitle("video2");
+		video1.setSpeaker(speaker);
+		video2.setSpeaker(speaker);
+		
+		speaker.getVideoSet().add(video1);
+		speaker.getVideoSet().add(video2);
+		session.save(speaker);
+		session.save(video1);
+		session.save(video2);
+	}
+}
+```
