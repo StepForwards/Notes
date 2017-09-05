@@ -36,3 +36,34 @@ public class Video {
 }
 ```
 **配置ORM映射文件**
+
+> 在数据库中两张表的关系是通过==外键==联系并维护的，因此我们需要指定video的speakerId为外键映射Speaker的主键以建立两个表的关系。
+
+``` xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    
+<hibernate-mapping package="com.zhiyou100.hibernate.model">
+	<class name="Speaker" table="t_speaker" >
+		<id name="id" >
+			<generator class="native"></generator>
+		</id>
+		
+		<property name="name"></property>
+		
+		<set name="videoSet" >
+			<key column="speakerId"></key>
+			<one-to-many class="Video"/>
+		</set>
+		<!-- 
+			<list name="videoSet">
+				<key column="speakerId"></key>
+				<index column="colIndex" type="java.lang.Integer"></index>
+				<one-to-many class="Video"/>
+			</list>
+		-->
+	</class>
+</hibernate-mapping>
+```
