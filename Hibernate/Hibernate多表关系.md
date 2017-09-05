@@ -89,24 +89,31 @@ public class One2ManyTest {
 	private Session session;
 	private Transaction transaction;
 	
+	//test开始之前执行
 	@Before
 	public void befor(){
+		//使用工具类开启会话
 		session = MyHibernateUtil.openSession();
+		//开启事务
 		transaction = session.beginTransaction();
 	}
-	
+	//test结束之后执行
 	@After
 	public void after(){
+		//提交事务
 		transaction.commit();
+		//关闭会话
 		session.close();
+		//关闭工厂
 		MyHibernateUtil.closeFactory();
 	}
 	
 	
 	@Test
 	public void test01(){
+		//创建Speaker
 		Speaker speaker = new Speaker();
-		speaker.setName("八王");
+		speaker.setName("张三");
 		
 		Video video1 = new Video();
 		Video video2 = new Video();
