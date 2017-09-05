@@ -21,3 +21,18 @@ public class Speaker {
 	...//以下的set,get方法省略
 }
 ```
+ - 在Video中添加==类类型==Speaker
+ 
+
+``` java
+public class Video {
+	
+	private Integer id;
+	private String title;
+	private Integer speakerId;
+	private Speaker speaker;
+	
+	...//省略set,get方法
+}
+```
+**配置ORM映射文件**
