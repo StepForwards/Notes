@@ -3,7 +3,7 @@ title: Hibernate多表关系
 tags: hibernate
 grammar_cjkRuby: true
 ---
-`
+-
 	* [一对多（多对一）](#一对多多对一)
 		* [创建实体](#创建实体)
 		* [配置ORM映射文件](#配置orm映射文件)
