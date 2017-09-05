@@ -208,11 +208,15 @@ Hibernate: update t_video set speakerId=? where id=?
 奇怪的是为什么执行了5条sql语句？这就是外键维护权的问题。
 我们知道video拥有对speaker的维护权，这里的维护权包含speaker中所有字段的维护权，既包含外键维护权；同样speaker也拥有对video的维护权。
 
-> 在第一条sql执行后，speaker被保存到数据库（此时外键speakerId存在）
-> 执行第二条sql的时候，video1被保存到数据库，因为speakerId存在，所以在插入video的时候speakerId也会被保存到video1对象中，也正因为如此在这里video没有对自身外键进行维护。
-> 第三条sql同第二条sql。
-> 第四条为speaker对video的外键维护（对于speaker来说其不知道speakerId已经存在），再次更新speakerId，但是speakerId已经存在并且没有发生新的更改，所以此次维护就显得多余了。
-> 第五条同第四条。
+1. 在第一条sql执行后，speaker被保存到数据库（此时外键speakerId存在）
+
+2. 执行第二条sql的时候，video1被保存到数据库，因为speakerId存在，所以在插入video的时候speakerId也会被保存到video1对象中，也正因为如此在这里video没有对自身外键进行维护。
+
+3. 第三条sql同第二条sql。
+
+4. 第四条为speaker对video的外键维护（对于speaker来说其不知道speakerId已经存在），再次更新speakerId，但是speakerId已经存在并且没有发生新的更改，所以此次维护就显得多余了。
+
+5. 第五条同第四条。
 
 *需要注意的是如果我们执行的顺序如下*
 ``` java
