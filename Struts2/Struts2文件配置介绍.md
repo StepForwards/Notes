@@ -3,6 +3,14 @@ title: Struts2文件配置介绍
 tags: struts2
 grammar_cjkRuby: true
 ---
+
+-	* [structs.xml文件配置](#structsxml文件配置)
+		* [标签](#标签)
+		* [常量配置](#常量配置)
+		* [动态方法调用](#动态方法调用)
+		* [structs2中的默认配置](#structs2中的默认配置)
+		* [结果跳转的方式](#结果跳转的方式)
+
 ## structs.xml文件配置
 
 ### 标签
