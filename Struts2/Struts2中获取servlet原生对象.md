@@ -40,5 +40,13 @@ grammar_cjkRuby: true
 
 ![代理增强][1]
 
+通过ServletActionContext方式获取
+
+> 它是一个工具类,通过这个工具类可以获取到原生的request,response,session,servletContext,但是通过查看源码发现其内部还是从ActionContext中获取的
+
+- 获取原生request对象`ServletActionContext.getRequest()`
+- 获取原生response对象`ServletActionContext.getResponse()`
+- 获取原生servletContext对象`ServletActionContext.getServletContext()`
+- 获取原生session对象是通过获取的request对象进行获取的
 
   [1]: https://www.github.com/StepForwards/my-notes/raw/images/Struts2%E4%B8%AD%E8%8E%B7%E5%8F%96servlet%E5%8E%9F%E7%94%9F%E5%AF%B9%E8%B1%A1/images/1504791967191.jpg
