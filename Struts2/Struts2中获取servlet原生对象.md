@@ -49,4 +49,13 @@ grammar_cjkRuby: true
 - 获取原生servletContext对象`ServletActionContext.getServletContext()`
 - 获取原生session对象是通过获取的request对象进行获取的
 
+
+*通过实现接口的方式获取*
+
+> 我们可以通过实现ServletRequestAware, ServletContextAware,SessionAware,ServletResponseAware这四个接口来获取对应的4个原生对象,我们可以定义4个成员变量,在这个方法中将参数的值赋值给我们的成员变量,这些方法会在execute方法调用之前进行调用,所以在execute方法中就可以使用这些原生servlet对象
+
+![通过接口获取][2]
+
+
   [1]: https://www.github.com/StepForwards/my-notes/raw/images/Struts2%E4%B8%AD%E8%8E%B7%E5%8F%96servlet%E5%8E%9F%E7%94%9F%E5%AF%B9%E8%B1%A1/images/1504791967191.jpg
+  [2]: https://www.github.com/StepForwards/my-notes/raw/images/Struts2%E4%B8%AD%E8%8E%B7%E5%8F%96servlet%E5%8E%9F%E7%94%9F%E5%AF%B9%E8%B1%A1/images/1504792609661.jpg
