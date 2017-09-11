@@ -68,4 +68,25 @@ map.put("user2", new User("李四", "234"));
 
 > 通过查看源码我们可以发现，值栈的创建在于一次请求，每次请求都会创建一个ActionContext对象，并且创建一个值栈；值栈的生命周期和ActionContext和Request生命周期相同，存活于同一个请求
 
- [1]: https://www.github.com/StepForwards/my-notes/raw/images/OGNL%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%AF%AD%E6%B3%95/images/1505128766622.jpg
+### 包装request
+
+> 通过对原生的request对象进行包装，生成了一个`StrutsRequestWrapper`的类，在此类中重写了`getAttribute方法`
+
+![重写getAttribute()][2]
+
+![查找原理][3]
+
+> 注意查找当我们调用`request.getAttribute()`方法的时候，查找顺序是以下顺序，所以当我们在jsp页面中输入`${name}`它实际调用的就是经过包装的`request.getAttribute()`方法
+
+1. 查找原生request中的内容
+2. 查找值栈中的root中的内容
+3. 查找值栈中Context中的内容
+
+**放置内容**
+
+> 我们之前讲过想要往request域中放入数据的时候,需要调用ActionContext的put方法,推荐也是调用上述方法去放值所以我们之前调用的actionContext中的put方法的时候,在界面能够找到原因就是值栈中的context部分就是ActionContext,在界面中使用el表达式就能够进行获取操作
+
+
+  [1]: https://www.github.com/StepForwards/my-notes/raw/images/OGNL%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%AF%AD%E6%B3%95/images/1505128766622.jpg
+  [2]: https://www.github.com/StepForwards/my-notes/raw/images/OGNL,%E5%80%BC%E6%A0%88/images/1505132914735.jpg
+  [3]: https://www.github.com/StepForwards/my-notes/raw/images/OGNL,%E5%80%BC%E6%A0%88/images/1505132968562.jpg
