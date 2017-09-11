@@ -1,0 +1,51 @@
+---
+title: struts2拦截器
+tags: struts2
+grammar_cjkRuby: true
+---
+
+拦截器是struts2实现功能的核心
+
+**生命周期**
+
+> 项目启动的时候创建拦截器，项目销毁的时候拦截器销毁
+
+**创建方式**
+
+拦截器的创建方式有3种
+
+1. 实现Interceptor接口，实现3个方法，init方法，destory方法，intercept方法
+2. 继承AbstractIntercept，实现抽象方法`intercept`，其本身也是实现`Interceptor`接口
+3. 继承`MethodFilterInterceptor`实现抽象方法`doIntercept`，一般我们使用此方法进行创建
+
+**拦截过程**
+
+ - 拦截器的方法中有个参数`ActionInvocation invocation`，代表action对象，通过对象调用`invocation.invoke();`表示action方法的调用，也表示放行操作
+ - 类似于spring中的环绕通知，写在它前面的代码叫做拦截器的前处理
+ - 写在其后面的代码叫做其后处理程序
+ - 对于返回值，一般用于不放行跳转到结果页面，如果是方向就将`invocation.invoke();`的返回值赋值给它
+
+**配置拦截器**
+
+``` xml
+<!-- 配置拦截器 -->
+	<package name="myInterceptor" namespace="/user" extends="struts-default">
+		<interceptors>
+			<!-- 注册拦截器 -->
+			<interceptor name="authority" class="com.forward.ssh.web.interceptor.AuthorityInterceptor">
+				<param name="excludeMethods">login,execute</param>
+			</interceptor>
+			<!-- 自定义拦截栈 -->
+			<interceptor-stack name="myInterceptorStack">
+				<interceptor-ref name="authority"/>
+				<interceptor-ref name="defaultStack"/>
+			</interceptor-stack>
+		</interceptors>
+		<!-- 设置默认拦截栈 -->
+		<default-interceptor-ref name="myInterceptorStack"/>
+		<!-- 设置全局result -->
+		<global-results>
+			<result name="toLogin" >/WEB-INF/view/login.jsp</result>
+		</global-results>
+	</package>
+```
