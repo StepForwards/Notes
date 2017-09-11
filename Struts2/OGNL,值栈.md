@@ -64,6 +64,8 @@ map.put("user2", new User("李四", "234"));
  - 在界面上书写`<s:debug></s:debug>`标签，会生成debug标签
  - 栈中默认放置的就是当前访问的action对象
 
+### 值栈的生命周期
 
+> 通过查看源码我们可以发现，值栈的创建在于一次请求，每次请求都会创建一个ActionContext对象，并且创建一个值栈；值栈的生命周期和ActionContext和Request生命周期相同，存活于同一个请求
 
  [1]: https://www.github.com/StepForwards/my-notes/raw/images/OGNL%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%AF%AD%E6%B3%95/images/1505128766622.jpg
