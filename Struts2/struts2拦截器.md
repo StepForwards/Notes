@@ -27,12 +27,29 @@ grammar_cjkRuby: true
 
 **配置拦截器**
 
+``` java
+public class AuthorityInterceptor extends MethodFilterInterceptor {
+	//通过判断session中user是否为空，来判断用户是否登录，进而判断是否拦截
+	@Override
+	protected String doIntercept(ActionInvocation invocation) throws Exception {
+		User user = (User) ActionContext.getContext().getSession().get("user");
+		if(user == null){
+			return "toLogin";
+		}
+		return invocation.invoke();
+	}
+
+}
+```
+
+
 ``` xml
 <!-- 配置拦截器 -->
 	<package name="myInterceptor" namespace="/user" extends="struts-default">
 		<interceptors>
 			<!-- 注册拦截器 -->
 			<interceptor name="authority" class="com.forward.ssh.web.interceptor.AuthorityInterceptor">
+				<!-- 排除对指定方法的拦截 -->
 				<param name="excludeMethods">login,execute</param>
 			</interceptor>
 			<!-- 自定义拦截栈 -->
@@ -48,4 +65,30 @@ grammar_cjkRuby: true
 			<result name="toLogin" >/WEB-INF/view/login.jsp</result>
 		</global-results>
 	</package>
+```
+
+ - 注册拦截器
+ - 注册拦截器栈
+ - 指定默认拦截器栈
+
+**配置拦截器的排除**
+
+> 默认情况下是会拦截package中所有的action
+
+- 在对应的拦截器栈中的自定义的拦截器上添加`<param name="excludeMethods">add,delete</param>` 标签,指定排除规则
+- 也可以指定拦截某些方法`<param name="includeMethods">add,delete</param>`
+
+**配置全局异常界面**
+
+``` xml
+		<global-exception-mappings>
+			<exception-mapping result="error" exception="java.lang.Exception"></exception-mapping>
+		</global-exception-mappings>
+```
+**配置全局result**
+
+``` xml
+<global-results>
+	<result name="error">/error.jsp</result>
+</global-results>
 ```
