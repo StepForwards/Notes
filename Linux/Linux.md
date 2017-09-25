@@ -1,3 +1,9 @@
+---
+title:Linux命令
+tags: linux
+grammar_cjkRuby: true
+---
+
 1.命令解析器
 
 	shell--Unix操作系统
