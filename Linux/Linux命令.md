@@ -293,4 +293,18 @@ deb包安装
 	测试两台主机是否能通信：ping
 	查看域名对应的ip地址：nslookup www.baidu.com
 
+## 防火墙设置
 
+> centos6和7中设置设置内容不同
+
+- CentOS6.x 关闭防火墙: service iptables stop
+- CentOS7.x 关闭防火墙systemctl stop firewalld
+- CentOS6.x 永久关闭防火墙(开机不自启): chkconfig iptables off
+- CentOS7.x 永久关闭防火墙(开机不自启): systemctl disable firewalld
+- CentOS6.x 查看防火墙当前状态: service iptables status
+- CentOS7.x 查看防火墙当前状态: systemctl status firewalld
+
+## 开放Linux的对外访问的端口
+==例:开放3306端口==
+1. 先开放端口/sbin/iptables -I INPUT -p tcp --dport 3306 -j ACCEPT
+2. 然后保存设置/etc/rc.d/init.d/iptables save
