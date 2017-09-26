@@ -152,7 +152,7 @@ grammar_cjkRuby: true
 	- ==lpop key== 返回并弹出指定的key关联的链表中的第一个元素，即头部元素。
 	- ==rpop key== 从尾部弹出元素
 - ==llen key== 返回指定的key关联的链表中的元素的数量。
-- ==linsert key before|after pivot value== 在pivot元素前或者后插入value这个 元素。如==linsert mylist before 2 zhangsan==
+- ==linsert key before|after pivot value== 在pivot元素前或者后插入value这个 元素。如==linsert mylist before a zhangsan==在a之后插入zhangsan
 
 **set类型**
 
@@ -185,7 +185,7 @@ key2 表示key1中哪些元素不在key2中
 - ==zrevrange key start end [withscores]== 按照分数从大到小的顺序返回索引从startend的元素,[withscores]参数表明返回的成员包含其分数。
 - 删除元素
 	- ==zremrangebyrank key start end== 按照排名顺序删除从后向前的元素
-	- ==remrangebyscore key min max==按照分数从小到达删除
+	- ==zremrangebyscore key min max==按照分数从小到达删除
 - ==zrangebyscore key min max [withscores] [limit offset count]== 返回分数在[min,max]的成员并按照分数从低到高排序。[withscores]：显示分数；[limit offset count]：offset，表明从脚标为offset的元素开始并返回count个成员,例如==zrangebyscore mysort 60 100 withscores limit 0 2==
 - ==zcount key min max== 获取分数在[min,max]之间的成员个数
 - ==zincrby key increment member== 设置指定成员的增加的分数
