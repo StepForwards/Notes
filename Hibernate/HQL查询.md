@@ -72,28 +72,28 @@ grammar_cjkRuby: true
 
 ## QBC查询
 通过session调用`session.createCriteria(类名.class)`
-限定方法|说明
--|-
-Restrictions.eq | equal,等于
-Restrictions.allEq | 参数为Map对象,使用key/value进行多个等于的比对,相当于多个Restrictions.eq的效果
-Restrictions.gt  | greatthan > 大于
-Restrictions.ge | greatequal >= 大于等于
-Restrictions.lt   | lessthan,< 小于
-Restrictions.le  |lessequal <= 小于等于
-Restrictions.between| 对应SQL的between子句
-Restrictions.like | 对应SQL的LIKE子句
-Restrictions.in | 对应SQL的in子句
-Restrictions.and | and 关系
-Restrictions.or | or 关系
-Restrictions.isNull | 判断属性是否为空,为空则返回true
-Restrictions.isNotNull | 与isNull相反
-Restrictions.sqlRestriction | SQL限定的查询
-Order.asc | 根据传入的字段进行升序排序
-Order.desc | 根据传入的字段进行降序排序
-MatchMode.EXACT | 字符串精确匹配.相当于”like ‘value’”
-MatchMode.ANYWHERE | 字符串在中间匹配.相当于”like ‘%value%’”
-MatchMode.START | 字符串在最前面的位置.相当于”like ‘value%’”
-MatchMode.END | 字符串在最后面的位置.相当于”like ‘%value’”
+|限定方法|说明|
+|-|-|
+|Restrictions.eq | equal,等于|
+|Restrictions.allEq | 参数为Map对象,使用key/value进行多个等于的比对,相当于多个Restrictions.eq的效果|
+|Restrictions.gt  | greatthan > 大于|
+|Restrictions.ge | greatequal >= 大于等于|
+|Restrictions.lt   | lessthan,< 小于|
+|Restrictions.le  |lessequal <= 小于等于|
+|Restrictions.between| 对应SQL的between子句|
+|Restrictions.like | 对应SQL的LIKE子句|
+|Restrictions.in | 对应SQL的in子句|
+|Restrictions.and | and 关系|
+|Restrictions.or | or 关系|
+|Restrictions.isNull | 判断属性是否为空,为空则返回true|
+|Restrictions.isNotNull | 与isNull相反|
+|Restrictions.sqlRestriction | SQL限定的查询|
+|Order.asc | 根据传入的字段进行升序排序|
+|Order.desc | 根据传入的字段进行降序排序|
+|MatchMode.EXACT | 字符串精确匹配.相当于”like ‘value’”|
+MatchMode.ANYWHERE | 字符串在中间匹配.相当于”like ‘%value%’”|
+|MatchMode.START | 字符串在最前面的位置.相当于”like ‘value%’”|
+|MatchMode.END | 字符串在最后面的位置.相当于”like ‘%value’”|
 
 - 查询集合通过调用`list()`
 - 查询单个数据通过调用`uniqueResult()`
