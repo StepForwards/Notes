@@ -72,6 +72,7 @@ grammar_cjkRuby: true
 
 ## QBC查询
 通过session调用`session.createCriteria(类名.class)`
+
 |限定方法|说明|
 |-|-|
 |Restrictions.eq | equal,等于|
